@@ -76,6 +76,7 @@
 	
 	// Custom columns can be added to the main user account table to enable library functions to handle additional custom data stored within the table.
 	$config['database']['user_acc']['custom_columns'] = array(
+		'asd'
 		### Example : 'date_modified', 'modified_user_id' etc.
 	); 
 
@@ -135,8 +136,12 @@
 	$config['database']['user_privilege_groups']['table'] = 'user_privilege_groups';
 	$config['database']['user_privilege_groups']['columns']['id'] = 'upriv_groups_id';
 	$config['database']['user_privilege_groups']['columns']['group_id'] = 'upriv_groups_ugrp_fk';
-	$config['database']['user_privilege_groups']['columns']['privilege_id'] = 'upriv_groups_upriv_fk';
-
+	$config['database']['user_privilege_groups']['columns']['privilege_id'] = 'upriv_groups_upriv_fk'; 
+	
+	//$config['database']['custom']['user_privilege_groups']['custom_columns'] = array(
+	//																		'upriv_groups_usect_fk','upro_phone','upro_newsletter'
+	//																	);	
+	
 	###++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++###
 	
 	/**
@@ -152,6 +157,7 @@
 	$config['database']['user_sess']['columns']['series'] = 'usess_series';
 	$config['database']['user_sess']['columns']['token'] = 'usess_token';
 	$config['database']['user_sess']['columns']['date'] = 'usess_login_date';
+	 
 	
 	###++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++###
 	// Custom User Related Tables

@@ -22,7 +22,7 @@ class Admin_Controller extends MY_Controller
 			/*if(!$this->flexi_auth->is_admin()){
 				redirect('admin/login');
 			}*/
-			if ( !$this->input->is_ajax_request() ){
+			if ( !$this->input->is_ajax_request() ) {
 				$this->session->sess_update();
 			}
 			//$this->constantData['siteName'] = ' | Sistma Integral de Administración';
