@@ -5,7 +5,6 @@ class Niveles extends Admin_Controller
 	public function __construct()
 	{
 		parent::__construct();
-
 		$this->load->model($this->constantData['ruta_modelo'], '', TRUE);
 		$this->load->model(
 			array(
@@ -30,7 +29,7 @@ class Niveles extends Admin_Controller
 		$this->constantData['botones_r']['agregar']['text'] = 'Agregar Nivel';
 		$this->viewAdmin('comunes/top', $this->constantData);
 
-		if ( $this->_prueba('Ver') ) {
+		if ( $this->flexi_auth->is_privileged('Ver') ) {
 			$this->constantData['gridd']=$this->$modelo->Grid();
 			$content['grid'] = $this->viewAdmin('comunes/grid', $this->constantData, TRUE);
 			$content['constantData'] = $this->constantData;
@@ -43,25 +42,13 @@ class Niveles extends Admin_Controller
 	
 	}
 
-	public function _prueba($privilegios)
-	{
-		$seccion = 'usuarios_'.$this->router->fetch_class();
-		$arraySeccionCat = $this->auth->session_data['privileges'];
-
-		if ( in_array($privilegios, $arraySeccionCat[$seccion] ) ) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public function agregar()
 	{
 		;
 		$modelo = $this->constantData['modelo'];
 		$nivel = $this->constantData['privilegos']['insertar'];
 
-		if ( !$this->input->is_ajax_request() || !$this->_prueba('Agregar') ) {
+		if ( !$this->input->is_ajax_request() || !$this->flexi_auth->is_privileged('Agregar') ) {
 			show_error("No no no, así no se puede", 403);
 		}
 
@@ -80,7 +67,7 @@ class Niveles extends Admin_Controller
 		$modelo = $this->constantData['modelo'];
 		$nivel = $this->constantData['privilegos']['editar'];
 
-		if ( !$this->input->is_ajax_request() || !$this->_prueba('Editar')  ) {
+		if ( !$this->input->is_ajax_request() || !$this->flexi_auth->is_privileged('Editar')  ) {
 			show_error("No no no, asi no se puede",403);
 		}
 

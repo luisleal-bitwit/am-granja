@@ -8,7 +8,7 @@ class Admin_Controller extends MY_Controller
 		parent::__construct();
 		$common = $this->common;
 		$this->auth = new stdClass;
-		$this->load->library('flexi_auth');
+		$this->load->library('flexi_auth_custom',null,'flexi_auth');
 		$this->load->helper('admin_helper');
 		$this->load->helper('grid_helper');
 		$this->constantData['scripts']=array();

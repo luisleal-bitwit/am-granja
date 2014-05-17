@@ -34,12 +34,12 @@
 * Requirements: PHP5 or above and Codeigniter 2.0+
 */
 
+
 class Flexi_auth_lite
 {
 	public function __construct()
 	{
 		$this->CI =& get_instance();
-		
 		$this->CI->load->model('flexi_auth_lite_model');
 		
 		###++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++###

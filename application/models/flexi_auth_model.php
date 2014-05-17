@@ -592,10 +592,9 @@ class Flexi_auth_model extends Flexi_auth_lite_model
 
 		$sql_where = array($this->auth->tbl_col_user_group['id'] => $group_id);
 		
-		$update = $this->db->update($this->auth->tbl_user_group, $sql_update, $sql_where);
+		$this->db->update($this->auth->tbl_user_group, $sql_update, $sql_where);
 		
-		//return $this->db->affected_rows() == 1;	
-		return ($update ? true:false);
+		return $this->db->affected_rows() == 1;	
 	}
 
 	###++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++###
@@ -1504,8 +1503,6 @@ class Flexi_auth_model extends Flexi_auth_lite_model
 		
 		return $this->db->from($this->auth->tbl_user_privilege)
 			->join($this->auth->tbl_user_privilege_groups, $this->auth->tbl_col_user_privilege['id'].' = '.$this->auth->tbl_col_user_privilege_groups['privilege_id'])
-			->join('user_sections t3', $this->auth->tbl_user_privilege_groups.'.upriv_groups_usect_fk = t3.usec_id' )
-			//->join($this->auth->tbl_user_privilege_groups, $this->auth->tbl_col_user_privilege['id'].' = '.$this->auth->tbl_col_user_privilege_groups['privilege_id'])
 			->get();
 	}
 
@@ -1810,18 +1807,13 @@ class Flexi_auth_model extends Flexi_auth_lite_model
         if (in_array('group', $privilege_sources))
         {
             // Get group privileges.
-/*
-UPDATE INTERNO
- */
-
             $sql_select = array(
                 $this->auth->tbl_col_user_privilege['id'],
-                $this->auth->tbl_col_user_privilege['name'],
-                //LLAMAR AL NOMBRE DE LA SECCION
-                't3.usec_name'
+                $this->auth->tbl_col_user_privilege['name']
             );
 
             $sql_where = array($this->auth->tbl_col_user_privilege_groups['group_id'] => $user->{$this->auth->database_config['user_acc']['columns']['group_id']});
+
             $query = $this->get_user_group_privileges($sql_select, $sql_where);
 
             // Extend array of user privileges by group privileges.
@@ -1829,9 +1821,7 @@ UPDATE INTERNO
             {
                 foreach($query->result_array() as $data)
                 {
-                	$sect = $data['usec_name'];
-                	$priv = $data[$this->auth->database_config['user_privileges']['columns']['id']];
-                    $privileges[$sect][$priv] = $data[$this->auth->database_config['user_privileges']['columns']['name']];
+                    $privileges[$data[$this->auth->database_config['user_privileges']['columns']['id']]] = $data[$this->auth->database_config['user_privileges']['columns']['name']];
                 }
             }
         }

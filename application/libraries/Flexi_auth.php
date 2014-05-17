@@ -40,7 +40,6 @@ class Flexi_auth extends Flexi_auth_lite
 	public function __construct()
 	{
 		parent::__construct();
-		
 		$this->CI->load->model('flexi_auth_model');
 	}	
 	
