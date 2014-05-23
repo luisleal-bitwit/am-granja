@@ -1,6 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
-
-
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter CSV Import Class
  *
@@ -19,6 +17,13 @@
 
 class Csvimport 
 {
+    var $CI;
+    
+    public function __construct() 
+    {
+        // Do something with $params
+        $this->CI =& get_instance();
+    }
 
 	private $filepath = "";
     private $handle = "";
@@ -37,51 +42,41 @@ class Csvimport
     public function get_array($filepath='', $column_headers='', $detect_line_endings=FALSE)
     {
         // If true, auto detect row endings
-        if($detect_line_endings){
+        if ($detect_line_endings) {
             ini_set("auto_detect_line_endings", TRUE);
         }
 
         // If file exists, set filepath
-        if(file_exists($filepath)){
+        if (file_exists($filepath) ) {
             $this->_set_filepath($filepath);
-        }else{
-            return FALSE;            
+        } else {
+            return FALSE;
         }
 
         // If column headers provided, set them
         $this->_set_column_headers($column_headers);
-
         // Open the CSV for reading
         $this->_get_handle();
         
         $row = 0;
 
-        while (($data = fgetcsv($this->handle, 0, ",")) !== FALSE) 
-        {   
+        while (($data = fgetcsv($this->handle, 0, ",")) !== FALSE) {
             // If first row, parse for column_headers
-            if($row == 0)
-            {
+            if ($row == 0) {
                 // If column_headers already provided, use them
-                if($this->column_headers)
-                {
-                    foreach ($this->column_headers as $key => $value)
-                    {
+                if ($this->column_headers) {
+                    foreach ($this->column_headers as $key => $value) {
                         $column_headers[$key] = str_replace(' ', '',$value);
                     }
                 }
-                else // Parse first row for column_headers to use
-                {
-                    foreach ($data as $key => $value)
-                    {
+                else {// Parse first row for column_headers to use
+                    foreach ($data as $key => $value) {
                         $column_headers[$key] = str_replace(' ', '',$value);
                     }                
                 }          
-            }
-            else
-            {
+            } else {
                 $new_row = $row - 1; // needed so that the returned array starts at 0 instead of 1
-                foreach($column_headers as $key => $value) // assumes there are as many columns as their are title columns
-                {
+                foreach($column_headers as $key => $value) {// assumes there are as many columns as their are title columns
                     $result[$new_row][$value] =str_replace(' ', '', $data[$key]);
                 }
             }
@@ -92,7 +87,6 @@ class Csvimport
 
         return $result;
     }
-
    /**
      * Sets the filepath of a given CSV file
      *
@@ -114,12 +108,10 @@ class Csvimport
      */
     private function _set_column_headers($column_headers='')
     {
-        if(is_array($column_headers) && !empty($column_headers))
-        {
+        if(is_array($column_headers) && !empty($column_headers) ) {
             $this->column_headers = $column_headers;
         }
     }
-
    /**
      * Opens the CSV file for parsing
      *
@@ -130,7 +122,6 @@ class Csvimport
     {
         $this->handle = fopen($this->filepath, "r");
     }
-
    /**
      * Closes the CSV file when complete
      *
@@ -140,5 +131,5 @@ class Csvimport
     private function _close_csv()
     {
         fclose($this->handle);
-    }    
+    }
 }

@@ -2,69 +2,45 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Animal Listado</title>
+         <base href="<?php echo base_url() ?>" class="sitebase">
+        <title>Importar Animal Listado</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <link rel="stylesheet" href="assets/css/bootstrap-ui/jquery.ui.css">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.admin.blue.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.custom.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.multiselect.css">
+        <link rel="stylesheet" href="assets/css/loading.css">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+        <link rel="stylesheet" href="assets/css/jquery.jRating.css">
+        <link rel="stylesheet" href="assets/css/icons.css">
+        <link rel="stylesheet" href="assets/css/style.admin.css">
+        <link rel="stylesheet" href="assets/css/helpers.css">
     </head>
     <body>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <a class="brand" href="#">Animal listado</a>
+        <div id="high-cont">
+            <div id="contenido">
+                <div class="items">
+                    <div class="clearfix"></div>
+                    <div class="row-fluid">
+                        <h2>Importar Listado de animales</h2>
+                        <div class="container" style="margin-top:50px">
+                            <?php if (isset($error)): ?>
+                                <div class="alert alert-error"><?php echo $error; ?></div>
+                            <?php endif; ?>
+                            <?php if ($this->session->flashdata('success') == TRUE): ?>
+                                <div class="alert alert-success"><?php echo $this->session->flashdata('success'); ?>
+                                </div>
+                            <?php endif; ?>
+                            <form method="post" action="<?php echo base_url() ?>admin/animales/csv/importcsv" enctype="multipart/form-data">
+                                <input type="file" name="userfile" ><br><br>
+                                <input type="submit" name="submit" value="Subir CSV" class="btn btn-primary">
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="container" style="margin-top:50px">    
-             <br>
- 
-             <?php if (isset($error)): ?>
-                <div class="alert alert-error"><?php echo $error; ?></div>
-            <?php endif; ?>
-            <?php if ($this->session->flashdata('success') == TRUE): ?>
-                <div class="alert alert-success"><?php echo $this->session->flashdata('success'); ?></div>
-            <?php endif; ?>
- 
-            <h2>CI Animal Listado Import</h2>
-                <form method="post" action="<?php echo base_url() ?>admin/animales/csv/importcsv" enctype="multipart/form-data">
-                    <input type="file" name="userfile" ><br><br>
-                    <input type="submit" name="submit" value="UPLOAD" class="btn btn-primary">
-                </form>
-            <br><br>
-            <pre><?=print_r($NumRegIndiv)?></pre>
-
-
-                        <!--<table class="table table-striped table-hover table-bordered">
-                <caption>Animal Listado</caption>
-                <thead>
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Phone</th>
-                        <th>Email</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if ($addressbook == FALSE): ?>
-                        <tr><td colspan="4">There are currently No Addresses</td></tr>
-                    <?php else: ?>
-                        <?php foreach ($addressbook as $row): ?>
-                            <tr>
-                                <td><?php echo $row['firstname']; ?></td>
-                                <td><?php echo $row['lastname']; ?></td>
-                                <td><?php echo $row['phone']; ?></td>
-                                <td><?php echo $row['email']; ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-            <hr>
-            <footer>
-                <p>&copy;My Address Book</p>
-            </footer>-->
         </div>
     </body>
 </html>

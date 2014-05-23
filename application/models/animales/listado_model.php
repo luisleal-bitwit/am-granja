@@ -232,4 +232,9 @@ class Listado_Model extends CI_Model
 
 		return $msgs;
 	}
+
+	public function insertarCsv($data) 
+	{
+		$this->db->insert_batch('animal_listado', $data);
+	}
 }
